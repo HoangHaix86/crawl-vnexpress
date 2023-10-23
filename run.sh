@@ -1,0 +1,1 @@
+scrapy crawl vnexpress -o dataset.json
