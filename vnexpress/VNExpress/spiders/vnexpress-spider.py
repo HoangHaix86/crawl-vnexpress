@@ -32,7 +32,7 @@ class VNExpressSpider(CrawlSpider):
             )
     ]
     
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('/content/drive/MyDrive/data-vnexpress/data.db')
     c = conn.cursor()
     
     def __init__(self, *a, **kw):
