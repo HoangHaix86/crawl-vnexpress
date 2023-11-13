@@ -12,8 +12,8 @@ class VNExpressSpider(CrawlSpider):
 
     custom_settings = {
         "CONCURRENT_ITEMS": 40,
-        "CONCURRENT_REQUESTS": 20,
-        "CONCURRENT_REQUESTS_PER_DOMAIN": 20,
+        "CONCURRENT_REQUESTS": 30,
+        "CONCURRENT_REQUESTS_PER_DOMAIN": 30,
         "DEPTH_PRIORITY" : 1 ,
         "SCHEDULER_DISK_QUEUE" : 'scrapy.squeues.PickleFifoDiskQueue',
         "SCHEDULER_MEMORY_QUEUE" : 'scrapy.squeues.FifoMemoryQueue'
@@ -22,7 +22,7 @@ class VNExpressSpider(CrawlSpider):
     rules = [
         Rule(
             link_extractor=LinkExtractor(
-                allow=("^https:\/\/vnexpress\.net\/.+\.html$"),
+                allow=("^https:\/\/vnexpress\.net\/.+"),
                 tags=("a"),
                 attrs=("href"),
                 unique=True,
@@ -37,7 +37,7 @@ class VNExpressSpider(CrawlSpider):
     
     def __init__(self, *a, **kw):
         super().__init__(*a, **kw)
-        self.c.execute("CREATE TABLE IF NOT EXISTS data (url TEXT PRIMARY KEY, title TEXT, content TEXT)")
+        self.c.execute("CREATE TABLE IF NOT EXISTS data (url TEXT, title TEXT, content TEXT)")
 
     @staticmethod
     def process_breadcrumb(value):
