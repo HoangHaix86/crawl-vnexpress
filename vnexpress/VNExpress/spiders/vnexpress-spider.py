@@ -1,3 +1,4 @@
+import sqlite3
 import scrapy
 from scrapy.spiders import CrawlSpider, Rule, Response
 from scrapy.linkextractors import LinkExtractor
@@ -30,6 +31,13 @@ class VNExpressSpider(CrawlSpider):
                 follow=True
             )
     ]
+    
+    conn = sqlite3.connect('data.db')
+    c = conn.cursor()
+    
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw)
+        self.c.execute("CREATE TABLE IF NOT EXISTS data (url TEXT PRIMARY KEY, title TEXT, content TEXT)")
 
     @staticmethod
     def process_breadcrumb(value):
@@ -50,6 +58,10 @@ class VNExpressSpider(CrawlSpider):
             item["url"] = response.url
             item["title"] = f"{_type}"
             item["content"] = f"{_title_detail} {_description} {_content}"
+            
+            self.c.execute("INSERT INTO data VALUES (?, ?, ?)", (item["url"], item["title"], item["content"]))
+            self.conn.commit()
+            
             return item
         except Exception as e:
             pass
