@@ -11,7 +11,7 @@ class VNExpressSpider(CrawlSpider):
     start_urls = ["https://vnexpress.net"]
 
     custom_settings = {
-        "CONCURRENT_ITEMS": 40,
+        "CONCURRENT_ITEMS": 30,
         "CONCURRENT_REQUESTS": 30,
         "CONCURRENT_REQUESTS_PER_DOMAIN": 30,
         "DEPTH_PRIORITY" : 1 ,
@@ -32,7 +32,7 @@ class VNExpressSpider(CrawlSpider):
             )
     ]
     
-    conn = sqlite3.connect('/content/drive/MyDrive/data-vnexpress/data.db')
+    conn = sqlite3.connect('../../data.db')
     c = conn.cursor()
     
     def __init__(self, *a, **kw):
