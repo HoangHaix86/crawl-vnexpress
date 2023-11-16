@@ -1,9 +1,9 @@
 import sqlite3
-import scrapy
 from scrapy.spiders import CrawlSpider, Rule, Response
 from scrapy.linkextractors import LinkExtractor
 
-from VNExpress.items import VnexpressItem
+from vnexpress.VNExpress.items import VnexpressItem
+
 
 class VNExpressSpider(CrawlSpider):
     name = "vnexpress"
@@ -22,7 +22,7 @@ class VNExpressSpider(CrawlSpider):
     rules = [
         Rule(
             link_extractor=LinkExtractor(
-                allow=("^https:\/\/vnexpress\.net\/.+"),
+                allow=("^https:\/\/vnexpress\.net\/.+\.html$", "^https:\/\/vnexpress\.net\/.+"),
                 tags=("a"),
                 attrs=("href"),
                 unique=True,
