@@ -8,9 +8,9 @@ class VNExpressSpider(CrawlSpider):
     start_urls = ["https://vnexpress.net"]
 
     custom_settings = {
-        "CONCURRENT_ITEMS": 30,
-        "CONCURRENT_REQUESTS": 30,
-        "CONCURRENT_REQUESTS_PER_DOMAIN": 30,
+        "CONCURRENT_ITEMS": 10,
+        "CONCURRENT_REQUESTS": 10,
+        "CONCURRENT_REQUESTS_PER_DOMAIN": 10,
         "DEPTH_PRIORITY" : 1 ,
         "SCHEDULER_DISK_QUEUE" : 'scrapy.squeues.PickleFifoDiskQueue',
         "SCHEDULER_MEMORY_QUEUE" : 'scrapy.squeues.FifoMemoryQueue'
