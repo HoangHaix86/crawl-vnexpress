@@ -2,9 +2,6 @@ import sqlite3
 from scrapy.spiders import CrawlSpider, Rule, Response
 from scrapy.linkextractors import LinkExtractor
 
-from vnexpress.VNExpress.items import VnexpressItem
-
-
 class VNExpressSpider(CrawlSpider):
     name = "vnexpress"
     allowed_domains = ["vnexpress.net"]
@@ -54,14 +51,7 @@ class VNExpressSpider(CrawlSpider):
             _description = response.css(".description::text").get()
             _content = " ".join(" ".join(response.css(".fck_detail ::text").getall()).split())
          
-            item = VnexpressItem()
-            item["url"] = response.url
-            item["title"] = f"{_type}"
-            item["content"] = f"{_title_detail} {_description} {_content}"
-            
-            self.c.execute("INSERT INTO data VALUES (?, ?, ?)", (item["url"], item["title"], item["content"]))
+            self.c.execute("INSERT INTO data VALUES (?, ?, ?)", (response.url, f"{_type}", f"{_title_detail} {_description} {_content}"))
             self.conn.commit()
-            
-            return item
         except Exception as e:
             pass
